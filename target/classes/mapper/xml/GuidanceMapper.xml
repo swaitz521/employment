@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.GuidanceMapper">
+<resultMap id="BaseResult" type="com.employment.employments.vo.GuidanceVo">
+    <result column="id" property="id"></result>
+    <result column="guidance" property="guidance"></result>
+    <result column="teacher_id" property="teacherId"></result>
+    <result column="project_id" property="projectId"></result>
+    <result column="create_time" property="createTime"></result>
+    <result column="update_time" property="updateTime"></result>
+</resultMap>
+<!--    <delete id="deleteguidanceById">-->
+<!--        delete * from user u left join user_role ur on u.id=ur.user_id-->
+<!--         left join role r on r.id=ur.role_id left join role_project rp on r.id=rp.role_id-->
+<!--         left join project p on p.id=rp.project_id left join guidance g on p.id=g.id-->
+<!--         where u.id=#{userId};-->
+<!--    </delete>-->
+    <select id="findGuidanceById" resultMap="BaseResult">
+        select DISTINCT p.name,p.teacher,p.type,g.create_time,g.update_time,p.project_status,g.guidance,g.id
+        from user u left join user_role ur on u.id=ur.user_id
+                    left join role r on r.id=ur.role_id left join role_guidance rg on r.id=rg.role_id
+                    left join guidance g on g.id=rg.guidance_id LEFT JOIN project p on g.project_id=p.id
+       <where>
+           <if test="name!=null and name!='' ">
+               p.name like "%"#{name}"%" and
+           </if>
+           u.id=#{userId}
+       </where>
+    </select>
+    <select id="findGuidanceByGuidance" resultMap="BaseResult">
+        select DISTINCT p.name,p.teacher,p.type,g.create_time,g.update_time,p.project_status,g.guidance,g.id
+        from user u left join user_role ur on u.id=ur.user_id
+                    left join role r on r.id=ur.role_id left join role_guidance rg on r.id=rg.role_id
+                    left join guidance g on g.id=rg.guidance_id LEFT JOIN project p on g.project_id=p.id
+   where
+            u.id=#{userId}
+    </select>
+</mapper>

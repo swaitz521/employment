@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.BiographicalMapper">
+<resultMap id="BaseMap" type="com.employment.employments.entity.Biographical">
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+    <result column="avater" property="avater"></result>
+    <result column="advantage" property="advantage"></result>
+    <result column="introduction" property="introduction"></result>
+    <result column="address" property="address"></result>
+    <result column="project_experience" property="projectExperience"></result>
+    <result column="political" property="political"></result>
+    <result column="birthday" property="birthday"></result>
+    <result column="degree" property="degree"></result>
+    <result column="sex" property="sex"></result>
+    <result column="school" property="school"></result>
+    <result column="dept" property="dept"></result>
+    <result column="email" property="email"></result>
+    <result column="post" property="post"></result>
+    <result column="experience" property="experience"></result>
+    <result column="create_time" property="createTime"></result>
+    <result column="update_time" property="updateTime"></result>
+</resultMap>
+    <select id="findBiographicalByUserId" resultMap="BaseMap">
+        select b.* from user u left join user_bio ub on u.id=ub.user_id
+         left join biographical b on ub.biographical_id=b.id
+         where user_id=#{userId}
+         order by b.id asc;
+    </select>
+<!--    <select id="selectBioByUserId" resultType="com.employment.employments.entity.Biographical">-->
+<!--        select * from user u left join user-->
+<!--    </select>-->
+</mapper>

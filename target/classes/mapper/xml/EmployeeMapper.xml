@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.EmployeeMapper">
+
+    <select id="employeeInfo" resultType="com.employment.employments.entity.Employee">
+        select distinct e.* from user u left join user_com uc on
+            u.id=uc.user_id LEFT JOIN company c on c.id=uc.com_id
+                                        LEFT JOIN com_emp ce on c.id=ce.com_id LEFT JOIN employee e
+                                                                                         on e.id=ce.emp_id
+        WHERE u.id=#{userId}
+    </select>
+    <select id="selectUserNameByEmpId" resultType="java.lang.String">
+        SELECT u.username from employee e LEFT JOIN com_emp ce on
+            e.id=ce.emp_id LEFT JOIN company c on c.id=ce.com_id
+                                          LEFT JOIN user_com uc on c.id=uc.com_id LEFT JOIN
+                               `user` u on u.id=uc.user_id
+        WHERE e.id=#{empId};
+    </select>
+</mapper>
