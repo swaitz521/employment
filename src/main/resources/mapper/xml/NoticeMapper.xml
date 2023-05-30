@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.NoticeMapper">
+<resultMap id="baseResult" type="com.employment.employments.entity.Notice">
+    <id column="id" property="id"></id>
+    <result column="title" property="title"></result>
+    <result column="body" property="body"></result>
+    <result column="avater" property="avater"></result>
+    <result column="create_time" property="createTime"></result>
+    <result column="update_time" property="updateTime"></result>
+</resultMap>
+    <select id="selectTitle" resultMap="baseResult">
+      select title from notice limit 3;
+    </select>
+</mapper>

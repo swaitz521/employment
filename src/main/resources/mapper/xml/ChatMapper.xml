@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.ChatMapper">
+    <resultMap id="chatListMap" type="com.employment.employments.vo.ChatListData">
+        <result property="linkId" column="link_id"/>
+        <result property="friendName" column="to_user"/>
+        <result property="friendPicture" column="to_user_picture"/>
+        <result property="lastMessage" column="content"/>
+        <result property="unread" column="unread"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="fromWindow" column="from_window"/>
+    </resultMap>
+    <insert id="addChat">
+        insert into chat_user_link(link_id, from_user, to_user, create_time)
+            VALUE(#{linkId}, #{fromUser}, #{toUser}, #{createTime});
+    </insert>
+    <insert id="addChatList">
+        insert into chat_list(link_id, from_user, to_user, to_user_picture, from_window, to_window, unread) values
+        <foreach collection="chatLists" index="index" separator="," item="item">
+            (#{item.linkId}, #{item.fromUser}, #{item.toUser}, #{item.toUserPicture}, #{item.fromWindow}, ${item.toWindow}, #{item.unread})
+        </foreach>
+    </insert>
+    <insert id="addChatMessage">
+        insert into chat_message(link_id, from_user, to_user, content, send_time, type, is_latest) value
+            (#{linkId}, #{fromUser}, #{toUser}, #{content}, #{sendTime}, #{type}, #{isLatest});
+    </insert>
+    <update id="clearUnread">
+        update chat_list set unread = 0
+        where link_id = #{linkId} and from_user = #{fromUser} and to_user = #{toUser};
+    </update>
+    <update id="resetWindows">
+        update chat_list set from_window = 0 where from_user = #{username};
+        update chat_list set to_window = 0 where to_user = #{username};
+    </update>
+    <update id="updateOtherWindows">
+        update chat_list set from_window = 0 where link_id != #{linkId} and from_user = #{fromUser};
+        update chat_list set to_window = 0 where link_id != #{linkId} and to_user = #{fromUser};
+    </update>
+    <update id="updateIsSaveWindows">
+        update chat_list set from_window = 1 where link_id = #{linkId} and from_user = #{fromUser};
+        update chat_list set to_window = 1 where link_id = #{linkId} and to_user = #{fromUser};
+    </update>
+    <select id="selectIsFirstChat" parameterType="String" resultType="String">
+        select link_id from chat_user_link where (from_user = #{fromUser} and to_user = #{toUser}) or (from_user = #{toUser} and to_user = #{fromUser});
+    </select>
+    <select id="selectChatLists" resultType="com.employment.employments.vo.ChatListData">
+        select cl.link_id, cl.to_user, to_user_picture ,content, unread, send_time, from_window
+        from chat_list as cl, chat_message as cm
+        where cl.from_user = #{fromUser} and cl.link_id = cm.link_id and cm.is_latest = 1
+        order by send_time Desc;
+    </select>
+    <select id="selectChatMessage" resultType="com.employment.employments.vo.ChatMessageData">
+        select from_user, content, send_time from chat_message
+        where link_id = #{linkId} ORDER By send_time DESC
+            limit #{startIndex}, #{messageSize};
+    </select>
+    <select id="selectChatMessagesTotalNumber" resultType="java.lang.Integer">
+        select count(*) from chat_message where link_id = #{linkId};
+    </select>
+    <select id="selectUnreadTotalNumber" resultType="java.lang.Integer">
+        select sum(unread) from chat_list where from_user = #{username};
+    </select>
+</mapper>

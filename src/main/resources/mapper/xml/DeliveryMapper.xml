@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.DeliveryMapper">
+<resultMap id="BaseResult" type="com.employment.employments.entity.Delivery">
+    <id column="id" property="id"></id>
+    <result column="create_time" property="createTime"></result>
+    <result column="s" property="createTime"></result>
+    <result column="name" property="name"></result>
+    <result column="create_time" property="createTime"></result>
+
+</resultMap>
+    <select id="number1" resultType="com.employment.employments.entity.Delivery">
+        select DATE_FORMAT(create_time,'%c月') days ,count(id) as count1
+        from delivery
+        WHERE   create_time >='2023-01-01' and create_time &lt;='2023-12-31'
+        group by DATE_FORMAT(create_time,'%c月')
+    </select>
+    <select id="week" resultType="com.employment.employments.entity.Delivery">
+        SELECT  count(id) as count1 FROM delivery
+        WHERE YEARWEEK(date_format(create_time,'%Y-%m-%d'),1) = YEARWEEK(now(),1)
+        group by DATE_FORMAT(create_time,'%a')
+
+    </select>
+    <select id="selectByUserId" resultType="com.employment.employments.entity.Delivery">
+        SELECT DISTINCT d.* FROM `user` u LEFT JOIN user_delivery ud on
+            u.id=ud.user_id LEFT JOIN delivery d on ud.delivery_id
+            =d.id WHERE u.id=#{userId}
+    </select>
+    <select id="selectBioByEmpId" resultType="com.employment.employments.entity.Delivery">
+        select DISTINCT b.* FROM employee e left join bio_emp be on e.id=be.bio_id
+          left join biographical b on be.bio_id=b.id
+          where b.id=#{empId};
+    </select>
+</mapper>

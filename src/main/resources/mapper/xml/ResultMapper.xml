@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.ResultMapper">
+<resultMap id="BaseResult" type="com.employment.employments.vo.ResultVo">
+    <result column="id" property="id"></result>
+    <result column="review_results" property="reviewResults"></result>
+    <result column="type" property="type"></result>
+    <result column="expert_id" property="expertId"></result>
+    <result column="project_id" property="projectId"></result>
+    <result column="create_time" property="createTime"></result>
+    <result column="update_time" property="updateTime"></result>
+</resultMap>
+    <select id="findResultById" resultMap="BaseResult">
+        select DISTINCT p.name,p.score,p.type,re.create_time,p.project_status,p.student,p.introduction,p.teacher,re.review_results,re.id
+        from user u left join user_role ur on u.id=ur.user_id
+                    left join role r on r.id=ur.role_id left join role_result rr on r.id=rr.role_id
+                    left join result re on re.id=rr.result_id left join project p on p.id=re.project_id
+        where
+            u.id=#{userId};
+    </select>
+    <select id="findResultByName" resultMap="BaseResult">
+        select DISTINCT p.name,p.type,re.create_time,p.project_status,p.student,p.introduction,p.teacher,re.review_results,re.id
+        from user u left join user_role ur on u.id=ur.user_id
+                    left join role r on r.id=ur.role_id left join role_result rr on r.id=rr.role_id
+                    left join result re on re.id=rr.result_id left join project p on p.id=re.project_id
+        where
+            p.name like "%"#{name}"%";
+    </select>
+</mapper>
