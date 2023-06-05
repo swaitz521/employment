@@ -2,6 +2,9 @@ package com.employment.employments.mapper;
 
 import com.employment.employments.entity.Question;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.employment.employments.vo.QuestionNumber;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface QuestionMapper extends BaseMapper<Question> {
 
+    QuestionNumber number();
 }

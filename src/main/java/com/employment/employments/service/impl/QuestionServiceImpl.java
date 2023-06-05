@@ -4,10 +4,12 @@ import com.employment.employments.entity.Question;
 import com.employment.employments.mapper.QuestionMapper;
 import com.employment.employments.service.QuestionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.employment.employments.vo.QuestionNumber;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -35,5 +37,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         Question question1=new Question();
         BeanUtils.copyProperties(question,question1);
         return baseMapper.updateById(question1);
+    }
+
+    @Override
+    public QuestionNumber number() {
+        QuestionNumber integers= baseMapper.number();
+        return integers;
     }
 }

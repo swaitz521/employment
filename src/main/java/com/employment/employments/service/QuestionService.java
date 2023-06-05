@@ -2,6 +2,9 @@ package com.employment.employments.service;
 
 import com.employment.employments.entity.Question;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.employment.employments.vo.QuestionNumber;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +19,6 @@ public interface QuestionService extends IService<Question> {
     Integer add(Question question);
 
     Integer updateInfo(Question question);
+
+    QuestionNumber number();
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.GraduateMapper">
+
+
+    <select id="number" resultType="com.employment.employments.vo.GraduateNumber">
+        select COUNT(dept)as number1,COUNT(graduate_time)as number2,COUNT(address)as number3,COUNT(present)as number4,COUNT(salary)as number5,COUNT(introduction)as number6,COUNT(advice)as number7 FROM graduate
+
+    </select>
+</mapper>

@@ -4,10 +4,12 @@ import com.employment.employments.entity.Graduate;
 import com.employment.employments.mapper.GraduateMapper;
 import com.employment.employments.service.GraduateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.employment.employments.vo.GraduateNumber;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -35,5 +37,12 @@ public class GraduateServiceImpl extends ServiceImpl<GraduateMapper, Graduate> i
         Graduate graduate1=new Graduate();
         BeanUtils.copyProperties(graduate,graduate1);
         return baseMapper.updateById(graduate1);
+    }
+
+    @Override
+    public GraduateNumber number() {
+       GraduateNumber integers= baseMapper.number();
+
+        return integers;
     }
 }

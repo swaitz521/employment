@@ -2,6 +2,9 @@ package com.employment.employments.service;
 
 import com.employment.employments.entity.Graduate;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.employment.employments.vo.GraduateNumber;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +19,6 @@ public interface GraduateService extends IService<Graduate> {
     Integer add(Graduate graduate);
 
     Integer updateInfo(Graduate graduate);
+
+   GraduateNumber number();
 }

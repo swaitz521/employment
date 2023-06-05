@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employment.employments.entity.Question;
 import com.employment.employments.service.QuestionService;
 import com.employment.employments.util.Result;
+import com.employment.employments.vo.QuestionNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -60,6 +62,11 @@ public class QuestionController {
         queryWrapper.eq("user_id",userId);
         Question one = questionService.getOne(queryWrapper);
         return Result.success(one);
+    }
+    @GetMapping("count")
+    public Result count(){
+       QuestionNumber questionNumber = questionService.number();
+       return Result.success(questionNumber);
     }
 }
 

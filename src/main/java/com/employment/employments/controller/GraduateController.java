@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employment.employments.entity.Graduate;
 import com.employment.employments.service.GraduateService;
 import com.employment.employments.util.Result;
+import com.employment.employments.vo.GraduateNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -60,6 +62,16 @@ public class GraduateController {
         queryWrapper.eq("user_id",userId);
         Graduate one = graduateService.getOne(queryWrapper);
         return Result.success(one);
+    }
+
+    /**
+     * 统计各问题的数量
+     * @return
+     */
+    @GetMapping("count")
+    public Result number(){
+        GraduateNumber graduate = graduateService.number();
+        return Result.success(graduate);
     }
 }
 

@@ -2,6 +2,9 @@ package com.employment.employments.mapper;
 
 import com.employment.employments.entity.Graduate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.employment.employments.vo.GraduateNumber;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface GraduateMapper extends BaseMapper<Graduate> {
 
+    GraduateNumber number();
 }

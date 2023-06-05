@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.employments.mapper.QuestionMapper">
+
+
+    <select id="number" resultType="com.employment.employments.vo.QuestionNumber">
+        select COUNT(direction)as number1,COUNT(number)as number2,COUNT(talent)as number3,COUNT(number)as number4,COUNT(degree)as number5,COUNT(post)as number6,COUNT(salary)as number7,COUNT(address)as number8 FROM question
+    </select>
+</mapper>
