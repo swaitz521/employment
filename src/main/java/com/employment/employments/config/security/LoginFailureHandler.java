@@ -42,9 +42,9 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
          }
         String result= JSON.toJSONString(Result.error().code(code).msg(msg), SerializerFeature.DisableCircularReferenceDetect);
         ServletOutputStream outputStream = response.getOutputStream();
-//        outputStream.write(result.getBytes(StandardCharsets.UTF_8));
-//        outputStream.flush();
-//        outputStream.close();
+        outputStream.write(result.getBytes(StandardCharsets.UTF_8));
+        outputStream.flush();
+        outputStream.close();
     }
     }
 

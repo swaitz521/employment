@@ -1,5 +1,6 @@
 package com.employment.employments.controller;
 
+import com.employment.employments.service.OssService;
 import com.employment.employments.util.QiniuUtils;
 import com.employment.employments.util.Result;
 import net.bytebuddy.implementation.bind.annotation.Origin;
@@ -17,6 +18,8 @@ import java.util.UUID;
 public class UploadController {
     @Autowired
     private QiniuUtils qiniuUtils;
+    @Autowired
+    private OssService ossService;
     @PostMapping
     public Result upload(@RequestParam("file") MultipartFile file){
 
@@ -32,5 +35,10 @@ public class UploadController {
             return Result.success(QiniuUtils.url+fileName);
         }
         return Result.error().msg("照片上传失败");
+    }
+    @PostMapping("oss")
+    public Result uploadFile(MultipartFile file){
+        String url=ossService.uploadFileAvatar(file);
+        return Result.success(url);
     }
 }
